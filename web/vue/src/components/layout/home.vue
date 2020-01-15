@@ -17,7 +17,7 @@ body
         .col-lg-8.text-center
           h2.text-white.mt-0 N&oacute;s temos o que voc&ecirc; precisa
           hr.divider.light.my-4
-          p.text-white-50.mb-4 blablablablablabla
+          p.text-white.mb-4 O Stark te ajuda a fazer trades de uma maneira mais inteligente. Usamos técicas avançadas de inteligência artificial para que o aprendizado seja da maneira mais eficiente possível.
           a.btn.btn-light.btn-xl.js-scroll-trigger(href='#planos') Veja nossos planos
     
   // contact section
@@ -27,7 +27,7 @@ body
         .col-lg-8.text-center
           h2.mt-0 Entre em contato!
           hr.divider.my-4
-          p.text-muted.mb-5 blablabla!
+          p.text-muted.mb-5 Você tem dúvidas? Entre em contato conosco!
       .row
         .col-lg-4.ml-auto.text-center.mb-5.mb-lg-0
           i.fas.fa-phone.fa-3x.mb-3.text-muted

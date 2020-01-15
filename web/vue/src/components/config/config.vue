@@ -1,11 +1,11 @@
 <template lang='pug'>
-div.contain
+body
   h3.txt--center.my2 Available API keys
   p(v-if='!apiKeySets.length')
     em You don't have any API keys yet.
   ul
     .txt--center.my2li(v-for='exchange in apiKeySets') {{ exchange }} (
-      a(href='#', v-on:click.prevent='removeApiKey(exchange)') remove
+      a(href='#', v-on:click.prevent='removeApiKey(exchange)') remover
       | )
   .txt--center.my
     a.btn.btn-primary.btn-xl(href='#', v-if='!addApiToggle', v-on:click.prevent='openAddApi') Add an API key
