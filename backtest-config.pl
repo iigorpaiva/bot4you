@@ -2,7 +2,9 @@ no warnings qw(uninitialized);
 ############################# START OF CONFIGURATION #############################
 # Put your strategy names between brackets in line below. Strategy seperate with space or newline. You can add all Your strategies from gekko/strategies directory with adding line ALL.
 @strategies = qw(
-neuralnet
+MACD
+CCI
+RSI
 );
 # Put your pairs between brackets in line below. Use exchange:currency:asset format. Seperate pair using space or newline. You can add all Your paris with ALL line or all pairs for exchange with binance:ALL line or binance:USDT:ALL line. Another option is adding dates for dataset for indivual pairs, ex: binance:BNB:NULS:2018-04-05:2018-05-01
 @pairs = qw(
@@ -11,22 +13,22 @@ poloniex:USDT:XRP
 
 # BUG - USE ONE CANDLE VALUE TEMPORARY! Put your candle values between brackets in line below. Use CandleSize:WarmupPeriod format. Seperate pair using space or newline.
 @warmup = qw(
-10:30
+15:10
 );
 
 ############################# OPTIONAL SETTINGS #############################
 # To specify time range for import or backtest uncomment lines below, but instead this you can use command line input ex.: backtest.pl --from "2018-01-01 00:00:00" --to "2018-01-05 00:00:00". If below lines are commented Gekko is using scan datasets feature in backtest mode.
-$from = '2019-11-15 00:00';
-$to = '2019-12-31 23:58';
+#$from = '2018-04-20 15:00:00';
+#$to = '2018-04-25 08:00:00';
 
 # If You are using only one exchange or one exchange and one currency You can put default values below, and adding only asset name to @pairs ex: NULS, ADA, TRX - without binance:BTC before asset ex: perl backtest.pl -p NULS,ADA,TRX.
-$default_set = 'poloniex:USDT';
+#$default_set = 'binance:BNB';
 
 # CSV file name. You don't need change this. All new data will append to exist file without deleting or replacing.
 $csv = 'database.csv';
 
 # You can add note to project below. Note will be add in CSV file. Its can be useful when You are developing strategy.
-$note = 'primordy';
+$note = 'first run';
 
 # Sort strategies in top list by. Available values to sort: best, profitable, profit_above_market, best_PL, worst_PL, profits_sum, avg_profit, trades_win, trades_day, hodl_time
 $top_strategy_sort1 = 'best';
@@ -41,7 +43,7 @@ $top_dataset_sort2 = 'profitable';
 $csv_columns = \ "[% currency %],[% asset %],[% strategy %],[% profit %],[% profit_market %],[% profit_day %],[% market_change %],[% trades_day %],[% percentage_wins %],[% best_win %],[% median_wins %],[% worst_loss %],[% median_losses %],[% avg_exposed_duration %],[% candle_size %],[% warmup_period %],[% dataset_days %],[% CMC_Rank %],[% current_marketcap %],[% open_price %],[% close_price %],[% lowest_price %],[% highest_price %],[% avg_price %],[% price_volality %],[% volume_day %],[% volume_CMC %],[% overall_trades_day %],[% dataset_from %],[% dataset_to %],[% strategy_settings %],[% note %]";
 # Minimalistic version - tables will dont generate
 # $csv_columns = \ "[% currency %],[% asset %],[% strategy %],[% profit %],[% trades_day %],[% percentage_wins %],[% best_win %],[% worst_loss %],[% avg_exposed_duration %],[% median_wins %],[% median_losses %],[% dataset_from %],[% dataset_to %],[% strategy_settings %],[% profit_day %],[% profit_market %],[% avg_price %],[% price_volality %],[% volume_day %],[% volume_CMC %],[% CMC_Rank %],[% current_marketcap %],[% overall_trades_day %],[% dataset_days %],[% market_change %]";
-#Full version - all possible BacktestTool variables.
+# Full version - all possible BacktestTool variables.
 #$csv_columns = \ "[% currency %],[% asset %],[% exchange %],[% strategy %],[% profit %],[% profit_day %],[% profit_year %],[% sharpe_ratio %],[% market_change %],[% profit_market %],[% trades %],[% trades_day %],[% winning_trades %],[% lost_trades %],[% percentage_wins %],[% best_win %],[% median_wins %],[% worst_loss %],[% median_losses %],[% avg_exposed_duration %],[% candle_size %],[% warmup_period %],[% dataset_days %],[% backtest_start %],[% dataset_from %],[% dataset_to %],[% CMC_Rank %],[% current_marketcap %],[% open_price %],[% close_price %],[% lowest_price %],[% highest_price %],[% avg_price %],[% price_volality %],[% volume %],[% volume_day %],[% volume_CMC %],[% overall_trades %],[% overall_trades_day %],[% note %]";
 
 # Do You want coinmarketcap.com data in CSV output?
@@ -50,7 +52,7 @@ $cmc_data = 'yes';
 # Single backtest results interval for print backtests summary (% complete, eta, avg backtest time, elapsed) for all results from current instance
 $summary_interval = 60;
 # Print above tables on each summary?
-$print_analysis_on_summary = 'no';
+$print_analysis_on_summary = 'yes';
 
 # Print ALL RESULTS table when use command backtest -a CSV file and at end of all backtests?
 $print_all_results = 'yes';
@@ -95,23 +97,37 @@ $keep_logs = 'no';
 $threads = 5;
 
 # When you set stfu to 'yes' only results will be displayed.
-$stfu = 'yes';
+$stfu = 'no';
 
 # If You set $use_toml_files to 'no' then add Your strat's config in JSON format between brackets below.
-#$stratsettings = q(
-#config.neuralnet = {
-#  "threshold_buy": 1,
-#  "threshold_sell": -1,
-#  "price_buffer_len": 100,
-#  "learning_rate": 1,
-#  "momentum": 0.9,
-#  "decay": 0.01,
-#  "min_predictions": 1000,
-#  "stoploss_enabled": false,
-#  "stoploss_threshold": 0.95
-#};
+$stratsettings = q(
+config.neuralnet = {
+  "threshold_buy": 1,
+  "threshold_sell": -1,
+  "price_buffer_len": 100,
+  "learning_rate": 1,
+  "momentum": 0.9,
+  "decay": 0.01,
+  "min_predictions": 1000,
+  "stoploss_enabled": false,
+  "stoploss_threshold": 0.95
+};
 
-#);
+config.neuralnet_BULL_BEAR = {
+  "threshold_sell_bear":-1.0352,
+  "threshold_sell_bull":-0.992,
+  "momentum":0.0982,
+  "decay":0.0076,
+  "threshold_buy_bull":1.955,
+  "price_buffer_len":88.6,
+  "SMA_short":38,
+  "SMA_long":712,
+  "min_predictions":760,
+  "threshold_buy_bear":2.8294,
+  "learning_rate":0.2736
+};
+
+);
 
 # Other Gekko's settings for backtest
 $asset_c = 1;
