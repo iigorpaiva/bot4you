@@ -2,9 +2,7 @@ no warnings qw(uninitialized);
 ############################# START OF CONFIGURATION #############################
 # Put your strategy names between brackets in line below. Strategy seperate with space or newline. You can add all Your strategies from gekko/strategies directory with adding line ALL.
 @strategies = qw(
-MACD
-CCI
-RSI
+neuralnet
 );
 # Put your pairs between brackets in line below. Use exchange:currency:asset format. Seperate pair using space or newline. You can add all Your paris with ALL line or all pairs for exchange with binance:ALL line or binance:USDT:ALL line. Another option is adding dates for dataset for indivual pairs, ex: binance:BNB:NULS:2018-04-05:2018-05-01
 @pairs = qw(
@@ -28,7 +26,7 @@ poloniex:USDT:XRP
 $csv = 'database.csv';
 
 # You can add note to project below. Note will be add in CSV file. Its can be useful when You are developing strategy.
-$note = 'first run';
+$note = 'primeiro';
 
 # Sort strategies in top list by. Available values to sort: best, profitable, profit_above_market, best_PL, worst_PL, profits_sum, avg_profit, trades_win, trades_day, hodl_time
 $top_strategy_sort1 = 'best';
@@ -97,7 +95,7 @@ $keep_logs = 'no';
 $threads = 5;
 
 # When you set stfu to 'yes' only results will be displayed.
-$stfu = 'no';
+$stfu = 'yes';
 
 # If You set $use_toml_files to 'no' then add Your strat's config in JSON format between brackets below.
 $stratsettings = q(
