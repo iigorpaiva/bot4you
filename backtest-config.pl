@@ -16,14 +16,14 @@ poloniex:USDT:XRP
 
 ############################# OPTIONAL SETTINGS #############################
 # To specify time range for import or backtest uncomment lines below, but instead this you can use command line input ex.: backtest.pl --from "2018-01-01 00:00:00" --to "2018-01-05 00:00:00". If below lines are commented Gekko is using scan datasets feature in backtest mode.
-$from = '2019-01-01 00:03';
-$to = '2020-02-22 18:04';
+$from = '2020-01-01 00:00';
+$to = '	2020-02-28 11:57';
 
 # If You are using only one exchange or one exchange and one currency You can put default values below, and adding only asset name to @pairs ex: NULS, ADA, TRX - without binance:BTC before asset ex: perl backtest.pl -p NULS,ADA,TRX.
 #$default_set = 'binance:BNB';
 
 # CSV file name. You don't need change this. All new data will append to exist file without deleting or replacing.
-$csv = 'database.csv';
+$csv = 'database2.csv';
 
 # You can add note to project below. Note will be add in CSV file. Its can be useful when You are developing strategy.
 $note = 'primeiro';

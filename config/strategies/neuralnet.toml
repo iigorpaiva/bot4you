@@ -1,8 +1,8 @@
 threshold_buy = 1.0
-threshold_sell = -0.96
+threshold_sell = "-0.90..-0.99:0.01"
 method = 'sgd'
 
-learning_rate = "0.1..1.5:0.1"
+learning_rate = "0.01..1:0.01"
 momentum = "0.1..1:0.1"
 decay = 0.01
 stoploss_enabled = true
